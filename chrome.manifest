@@ -1,0 +1,5 @@
+content	zotero-storage-scanner				chrome/content/zotero-storage-scanner/
+locale	zotero-storage-scanner	en-US		chrome/locale/en-US/zotero-storage-scanner/
+skin	zotero-storage-scanner	default		chrome/skin/default/zotero-storage-scanner/
+
+overlay	chrome://zotero/content/zoteroPane.xul	chrome://zotero-storage-scanner/content/overlay.xul
