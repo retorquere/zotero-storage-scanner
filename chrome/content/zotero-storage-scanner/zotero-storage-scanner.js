@@ -78,7 +78,7 @@ Zotero.StorageScanner = {
             var parent=Zotero.Items.get(item.getSource());
             if (parent) {
               var ext = file_extension(path);
-              duplicates[parent.id] = duplicates[item.id] || {};
+              duplicates[parent.id] = duplicates[parent.id] || {};
               duplicates[parent.id][ext] = duplicates[parent.id][ext] || 0;
               duplicates[parent.id][ext] += 1;
             }
