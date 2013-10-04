@@ -90,7 +90,7 @@ Zotero.StorageScanner = {
     for (var id in Object.keys(duplicates)) {
       var attachments = duplicates[id];
       dups = false
-      for (var ext in Objects.keys(attachments)) {
+      for (var ext in Object.keys(attachments)) {
         dups = dups || (attachments[ext] > 2);
       }
       if (dups) {

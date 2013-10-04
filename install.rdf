@@ -5,7 +5,7 @@
 	<Description about="urn:mozilla:install-manifest">
 		<em:id>storage-scanner@iris-advies.com</em:id>
 		<em:name>Storage Scanner Plugin for Zotero</em:name>
-		<em:version>0.0.5</em:version>
+		<em:version>0.0.6</em:version>
 		<em:description>A sample plugin for Zotero</em:description>
 		<em:creator>Center for History and New Media<br/>George Mason University</em:creator>
 		<em:updateURL>https://raw.github.com/friflaj/zotero-storage-scanner/master/update.rdf</em:updateURL>
