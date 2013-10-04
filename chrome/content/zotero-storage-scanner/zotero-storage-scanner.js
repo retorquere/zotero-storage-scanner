@@ -1,8 +1,19 @@
 Zotero.StorageScanner = {
 	init: function () {
 	},
-	
+
 	scan: function() {
+    duplicates = {};
+
+    function file_extension(filename)
+    {
+      var a = filename.split();
+      if (a.length == 1 || ( a[0] = "" && a.length == 2 ) ) {
+        return "";
+      }
+      return a.pop().toLowerCase();
+    }
+
     var items = Zotero.Items.getAll();
     for each(var item in items) {
       if (item.isAttachment()) {
@@ -21,12 +32,31 @@ Zotero.StorageScanner = {
           if (!file.exists()) {
             Zotero.debug("Broken " + item.attachmentPath);
             item.addTag('#broken');
+          } else {
+            var parent=Zotero.Items.get(item.getSource());
+            if (parent) {
+              var ext = file_extension(path);
+              duplicates[parent.id] = duplicates[item.id] || {};
+              duplicates[parent.id][ext] = duplicates[item.id][ext] || 0;
+              duplicates[parent.id][ext] += 1;
+            }
           }
         }
       }
     }
+
+    for (var id in Object.keys(duplicates)) {
+      var attachments = duplicates[id];
+      dups = false
+      for (var ext in Objects.keys(attachments)) {
+        dups = dups || (attachments[ext] > 2);
+      }
+      if (dups) {
+        var item = Zotero.Items.get(id);
+        item.addTag('#duplicates');
+      }
+    }
 	}
-	
 };
 
 // Initialize the utility
