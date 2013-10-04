@@ -1,45 +1,3 @@
-// From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
-if (!Object.keys) {
-  Object.keys = (function () {
-    'use strict';
-    var hasOwnProperty = Object.prototype.hasOwnProperty,
-        hasDontEnumBug = !({toString: null}).propertyIsEnumerable('toString'),
-        dontEnums = [
-          'toString',
-          'toLocaleString',
-          'valueOf',
-          'hasOwnProperty',
-          'isPrototypeOf',
-          'propertyIsEnumerable',
-          'constructor'
-        ],
-        dontEnumsLength = dontEnums.length;
-
-    return function (obj) {
-      if (typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
-        throw new TypeError('Object.keys called on non-object');
-      }
-
-      var result = [], prop, i;
-
-      for (prop in obj) {
-        if (hasOwnProperty.call(obj, prop)) {
-          result.push(prop);
-        }
-      }
-
-      if (hasDontEnumBug) {
-        for (i = 0; i < dontEnumsLength; i++) {
-          if (hasOwnProperty.call(obj, dontEnums[i])) {
-            result.push(dontEnums[i]);
-          }
-        }
-      }
-      return result;
-    };
-  }());
-}
-
 Zotero.StorageScanner = {
 	init: function () {
 	},
@@ -87,10 +45,12 @@ Zotero.StorageScanner = {
       }
     }
 
-    for (var id in Object.keys(duplicates)) {
+    for (var id in duplicates) {
+      Zotero.debug('attachments for: ' + id);
       var attachments = duplicates[id];
+      Zotero.debug('attachments: ' + typeof(attachments));
       dups = false
-      for (var ext in Object.keys(attachments)) {
+      for (var ext in attachments) {
         dups = dups || (attachments[ext] > 2);
       }
       if (dups) {
