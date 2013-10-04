@@ -37,7 +37,7 @@ Zotero.StorageScanner = {
             if (parent) {
               var ext = file_extension(path);
               duplicates[parent.id] = duplicates[item.id] || {};
-              duplicates[parent.id][ext] = duplicates[item.id][ext] || 0;
+              duplicates[parent.id][ext] = duplicates[parent.id][ext] || 0;
               duplicates[parent.id][ext] += 1;
             }
           }
