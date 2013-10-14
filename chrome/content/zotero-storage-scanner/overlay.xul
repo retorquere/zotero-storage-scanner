@@ -13,7 +13,7 @@
 	<menupopup id="zotero-tb-actions-popup">
 		<!-- Make sure the menu separator for utilities is visible -->
 		<menuseparator id="zotero-tb-actions-plugins-separator" hidden="false"/>
-		<menuitem insertbefore="zotero-tb-actions-separator" label="zotero-storage-scanner.name;" oncommand="Zotero.StorageScanner.scan()"/>
+		<menuitem insertbefore="zotero-tb-actions-separator" label="&zotero-storage-scanner.name;" oncommand="Zotero.StorageScanner.scan()"/>
 	</menupopup>
 	
 	<!-- Include the main extension logic -->

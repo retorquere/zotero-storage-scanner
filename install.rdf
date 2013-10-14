@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
-<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-		xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 	
 	<Description about="urn:mozilla:install-manifest">
 		<em:id>storage-scanner@iris-advies.com</em:id>
 		<em:name>Storage Scanner Plugin for Zotero</em:name>
-		<em:version>0.0.8</em:version>
+		<em:version>0.0.9</em:version>
 		<em:description>A sample plugin for Zotero</em:description>
 		<em:creator>Center for History and New Media<br/>George Mason University</em:creator>
 		<em:updateURL>https://raw.github.com/friflaj/zotero-storage-scanner/master/update.rdf</em:updateURL>
