@@ -24,15 +24,15 @@ file 'update.rdf' => [XPI, 'install.rdf'] do
   update_rdf = Nokogiri::XML(File.open('update.rdf'))
   update_rdf.at('//em:version').content = RELEASE
   update_rdf.at('//RDF:Description')['about'] = "urn:mozilla:extension:#{EXTENSION_ID}"
-  update_rdf.xpath('//em:updateLink').each{|link| link.content = "https://raw.github.com/friflaj/zotero-#{EXTENSION}/master/#{XPI}" }
-  update_rdf.xpath('//em:updateInfoURL').each{|link| link.content = "https://github.com/friflaj/zotero-#{EXTENSION}" }
+  update_rdf.xpath('//em:updateLink').each{|link| link.content = "https://raw.github.com/ReichenHack/zotero-#{EXTENSION}/master/#{XPI}" }
+  update_rdf.xpath('//em:updateInfoURL').each{|link| link.content = "https://github.com/ReichenHack/zotero-#{EXTENSION}" }
   File.open('update.rdf','wb') {|f| update_rdf.write_xml_to f}
 end
 
 file 'README.md' => [XPI, 'Rakefile'] do |t|
   puts 'Updating README.md'
   readme = File.open(t.name).read
-  readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://raw.github.com/friflaj/zotero-#{EXTENSION}/master/#{XPI})")
+  readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://raw.github.com/ReichenHack/zotero-#{EXTENSION}/master/#{XPI})")
   readme.gsub!(/\*\*[0-9]+\.[0-9]+\.[0-9]+\*\*/, "**#{RELEASE}**")
   File.open(t.name, 'w'){|f| f.write(readme)}
 end
@@ -57,7 +57,7 @@ task :release, :bump do |t, args|
 
   install_rdf = Nokogiri::XML(File.open('install.rdf'))
   install_rdf.at('//em:version').content = release
-  install_rdf.at('//em:updateURL').content = "https://raw.github.com/friflaj/zotero-#{EXTENSION}/master/update.rdf"
+  install_rdf.at('//em:updateURL').content = "https://raw.github.com/ReichenHack/zotero-#{EXTENSION}/master/update.rdf"
   File.open('install.rdf','wb') {|f| install_rdf.write_xml_to f}
   puts "Release set to #{release}. Please publish."
 end

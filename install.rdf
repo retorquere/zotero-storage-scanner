@@ -4,10 +4,10 @@
 	<Description about="urn:mozilla:install-manifest">
 		<em:id>storage-scanner@iris-advies.com</em:id>
 		<em:name>Zotero Storage Scanner Plugin</em:name>
-		<em:version>0.0.14</em:version>
+		<em:version>0.0.15</em:version>
 		<em:description>This plugin scans your storage for missing attachments and possible duplicates</em:description>
 		<em:creator>Emiliano Heyns</em:creator>
-		<em:updateURL>https://raw.github.com/friflaj/zotero-storage-scanner/master/update.rdf</em:updateURL>
+		<em:updateURL>https://raw.github.com/ReichenHack/zotero-storage-scanner/master/update.rdf</em:updateURL>
 		<em:type>2</em:type> <!-- type=extension -->
 		
 		<!-- Requires Zotero -->
