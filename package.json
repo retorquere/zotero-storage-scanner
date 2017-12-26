@@ -14,14 +14,32 @@
     "type": "git",
     "url": "git+https://github.com/retorquere/zotero-storage-scanner.git"
   },
-  "author": "Emiliano Heyns",
+  "author": {
+    "name": "Emiliano Heyns",
+    "email": "Emiliano.Heyns@iris-advies.com"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/retorquere/zotero-storage-scanner/issues"
   },
   "homepage": "https://github.com/retorquere/zotero-storage-scanner#readme",
   "dependencies": {
+    "circular-dependency-plugin": "^4.3.0",
+    "find-up": "^2.1.0",
+    "fs-extra": "^5.0.0",
+    "properties-reader": "0.0.16",
+    "pug": "^2.0.0-rc.4",
+    "replace": "^0.3.0",
+    "rimraf": "^2.6.2",
+    "ts-node": "^4.1.0",
     "tslint": "^5.8.0",
-    "typescript": "^2.6.2"
+    "typescript": "^2.6.2",
+    "uri-templates": "^0.2.0",
+    "webpack": "^3.10.0"
+  },
+  "xpi": {
+    "name": "Zotero Storage Scaner",
+    "updateLink": "https://github.com/retorquere/zotero-storage-scanner/releases/download/v{version}/zotero-better-bibtex-{version}.xpi",
+    "releaseURL": "https://github.com/retorquere/zotero-storage-scanner/releases/download/release/"
   }
 }
