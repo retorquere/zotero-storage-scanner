@@ -1,0 +1,4 @@
+[submodule "zotero-webpack"]
+	path = zotero-webpack
+	url = https://github.com/retorquere/zotero-plugin-webpack.git
+	branch = master

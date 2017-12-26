@@ -1,0 +1,3 @@
+{
+    "extends": "./zotero-webpack/tslint.json"
+}
