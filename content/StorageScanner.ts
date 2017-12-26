@@ -1,18 +1,13 @@
-Zotero.StorageScanner = {
-	init: function () {
-	},
+export = new class StorageScanner = {
+  constructor() {
+    window.addEventListener('load', e => { this.load() }, false)
+  }
 
-	scan: function() {
+	load() {
+	}
+
+	public async scan() {
     duplicates = {};
-
-    function file_extension(filename)
-    {
-      var a = filename.split();
-      if (a.length == 1 || ( a[0] = "" && a.length == 2 ) ) {
-        return "";
-      }
-      return a.pop().toLowerCase();
-    }
 
     var items = Zotero.Items.getAll();
     for each(var item in items) {
@@ -59,7 +54,10 @@ Zotero.StorageScanner = {
       }
     }
 	}
-};
 
-// Initialize the utility
-window.addEventListener('load', function(e) { Zotero.StorageScanner.init(); }, false);
+  private file_extension(filename) {
+    const a = filename.split()
+    if (a.length === 1 || (a[0] = '' && a.length === 2 )) return ''
+    return a.pop().toLowerCase()
+  }
+}

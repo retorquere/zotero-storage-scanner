@@ -3,20 +3,20 @@
 <!DOCTYPE window SYSTEM "chrome://zotero-storage-scanner/locale/zotero-storage-scanner.dtd">
 
 <overlay id="zotero-storage-scanner-overlay"
-	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	
-	<stringbundleset id="stringbundleset">
-		<stringbundle id="zotero-storage-scanner-strings"
-			src="chrome://zotero-storage-scanner/locale/zotero-storage-scannerproperties"/>
-	</stringbundleset>
-	
-	<menupopup id="zotero-tb-actions-popup">
-		<!-- Make sure the menu separator for utilities is visible -->
-		<menuseparator id="zotero-tb-actions-plugins-separator" hidden="false"/>
-		<menuitem insertbefore="zotero-tb-actions-separator" label="&zotero-storage-scanner.name;" oncommand="Zotero.StorageScanner.scan()"/>
-	</menupopup>
-	
-	<!-- Include the main extension logic -->
-	<script src="chrome://zotero/content/include.js"/>
-	<script src="chrome://zotero-storage-scanner/content/include.js" type="application/javascript;version=1.8"/>
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="zotero-storage-scanner-strings"
+      src="chrome://zotero-storage-scanner/locale/zotero-storage-scannerproperties"/>
+  </stringbundleset>
+
+  <menupopup id="zotero-tb-actions-popup">
+    <!-- Make sure the menu separator for utilities is visible -->
+    <menuseparator id="zotero-tb-actions-plugins-separator" hidden="false"/>
+    <menuitem insertbefore="zotero-tb-actions-separator" label="&zotero-storage-scanner.name;" oncommand="Zotero.StorageScanner.scan()"/>
+  </menupopup>
+
+  <!-- Include the main extension logic -->
+  <script src="chrome://zotero/content/include.js"/>
+  <script src="chrome://zotero-storage-scanner/content/StorageScanner.js"/>
 </overlay>
