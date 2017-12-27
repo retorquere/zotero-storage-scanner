@@ -1,63 +1,63 @@
-export = new class StorageScanner = {
+declare const Zotero: any
+
+export = new class StorageScanner {
+  /*
   constructor() {
     window.addEventListener('load', e => { this.load() }, false)
   }
 
-	load() {
-	}
+  public async load() {
+  }
+  */
 
-	public async scan() {
-    duplicates = {};
+  public async scan() {
+    // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
+    await Zotero.Schema.schemaUpdatePromise
 
-    var items = Zotero.Items.getAll();
-    for each(var item in items) {
-      if (item.isAttachment()) {
-        if (!item.attachmentPath) {
-          Zotero.debug("Scanning " + item.id + " which has no path!");
-        }
+    const attachments = await Zotero.DB.queryAsync(`
+      WITH duplicates AS (
+        SELECT parentItemID, contentType, COUNT(*) as duplicates
+        FROM itemAttachments
+        WHERE itemID NOT IN (select itemID from deletedItems)
+        GROUP BY parentItemID, contentType
+      )
+      SELECT itemAttachments.itemID, COALESCE(duplicates.duplicates, 1) as duplicates
+      FROM itemAttachments
+      LEFT JOIN duplicates on itemAttachments.parentItemID = duplicates.parentItemID AND itemAttachments.contentType = duplicates.contentType
+      WHERE itemID NOT IN (select itemID from deletedItems)
+    `.replace(/\n/g, ' ').trim())
 
-        if (item.attachmentPath && item.attachmentPath.indexOf("storage:") == 0) {
-          var path = item.attachmentPath.substr(8);
+    for (const attachment of attachments) {
+      const item = await Zotero.Items.getAsync(attachment.itemID)
+      /*
+        because getAsync isn't "same as get but asynchronously" but "sort
+        of same as get but asynchronously, however if the object was not
+        already loaded by some user interaction you're out of luck". BTW,
+        if you could know at this point that getAsync would get you a loaded
+        object, you could just have called "get". Nice.
+        https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/nGKJakGnBAAJ
+        https://groups.google.com/d/msg/zotero-dev/naAxXIbpDhU/iSLpXo-UBQAJ
+      */
+      await item.loadAllData()
 
+      let save = false
 
-          var file = Zotero.Attachments.getStorageDirectory(item.id);
-          file.QueryInterface(Components.interfaces.nsILocalFile);
-          file.setRelativeDescriptor(file, path);
+      if (this.updateTag(item, '#broken', !(await item.getFilePathAsync()))) save = true
+      if (this.updateTag(item, '#duplicates', attachments.duplicates > 1)) save = true
 
-          if (!file.exists()) {
-            Zotero.debug("Broken " + item.attachmentPath);
-            item.addTag('#broken');
-          } else {
-            var parent=Zotero.Items.get(item.getSource());
-            if (parent) {
-              var ext = file_extension(path);
-              duplicates[parent.id] = duplicates[parent.id] || {};
-              duplicates[parent.id][ext] = duplicates[parent.id][ext] || 0;
-              duplicates[parent.id][ext] += 1;
-            }
-          }
-        }
-      }
+      if (save) await item.saveTx()
+    }
+  }
+
+  private updateTag(item, tag, add) {
+    if (add) {
+      if (item.hasTag(tag)) return false
+      item.addTag(tag)
+    } else {
+      if (!item.hasTag(tag)) return false
+      item.removeTag(tag)
     }
 
-    for (var id in duplicates) {
-      Zotero.debug('attachments for: ' + id);
-      var attachments = duplicates[id];
-      Zotero.debug('attachments: ' + typeof(attachments));
-      dups = false
-      for (var ext in attachments) {
-        dups = dups || (attachments[ext] > 2);
-      }
-      if (dups) {
-        var item = Zotero.Items.get(id);
-        item.addTag('#duplicates');
-      }
-    }
-	}
-
-  private file_extension(filename) {
-    const a = filename.split()
-    if (a.length === 1 || (a[0] = '' && a.length === 2 )) return ''
-    return a.pop().toLowerCase()
+    return true
   }
 }
