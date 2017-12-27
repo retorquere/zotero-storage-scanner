@@ -7,8 +7,7 @@
     "lint": "tslint -t stylish --project .",
     "prebuild": "npm run lint && ts-node build.ts",
     "build": "webpack",
-    "postbuild": "ts-node zotero-webpack/script/zipup.ts build zotero-better-bibtex",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postbuild": "zotero-plugin-zipup build zotero-storage-scanner"
   },
   "repository": {
     "type": "git",
@@ -30,17 +29,20 @@
     "properties-reader": "0.0.16",
     "pug": "^2.0.0-rc.4",
     "replace": "^0.3.0",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
     "rimraf": "^2.6.2",
     "ts-loader": "^3.2.0",
     "ts-node": "^4.1.0",
     "tslint": "^5.8.0",
     "typescript": "^2.6.2",
     "uri-templates": "^0.2.0",
-    "webpack": "^3.10.0"
+    "webpack": "^3.10.0",
+    "zotero-plugin": "0.0.8"
   },
   "xpi": {
     "name": "Zotero Storage Scaner",
-    "updateLink": "https://github.com/retorquere/zotero-storage-scanner/releases/download/v{version}/zotero-better-bibtex-{version}.xpi",
+    "updateLink": "https://github.com/retorquere/zotero-storage-scanner/releases/download/v{version}/zotero-storage-scanner-{version}.xpi",
     "releaseURL": "https://github.com/retorquere/zotero-storage-scanner/releases/download/release/"
   }
 }

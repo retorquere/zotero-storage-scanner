@@ -5,7 +5,7 @@
 import * as webpack from 'webpack'
 import * as path from 'path'
 
-import BailPlugin from './zotero-webpack/plugin/bail'
+import BailPlugin from 'zotero-plugin/plugin/bail'
 
 import CircularDependencyPlugin = require('circular-dependency-plugin')
 // import AfterBuildPlugin = require('./zotero-webpack/plugin/after-build')
@@ -16,7 +16,7 @@ const config = {
     alias: {
       'pegjs-loader': path.join(__dirname, './zotero-webpack/loader/pegjs.ts'),
       'json-loader': path.join(__dirname, './zotero-webpack/loader/json.ts'),
-      'wrap-loader': path.join(__dirname, './zotero-webpack/loader/wrap.ts'),
+      'wrap-loader': 'zotero-plugin/loader/wrap',
       'bcf-loader': path.join(__dirname, './setup/loaders/bcf.ts'),
     },
   },
