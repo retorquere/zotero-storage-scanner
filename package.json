@@ -7,7 +7,8 @@
     "lint": "tslint -t stylish --project .",
     "prebuild": "npm run lint && ts-node build.ts",
     "build": "webpack",
-    "postbuild": "zotero-plugin-zipup build zotero-storage-scanner"
+    "postbuild": "zotero-plugin-zipup build zotero-storage-scanner",
+    "release": "zotero-plugin-release"
   },
   "repository": {
     "type": "git",
