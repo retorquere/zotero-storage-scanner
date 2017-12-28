@@ -1,0 +1,23 @@
+---
+version: 1.0
+machine:
+  environment:
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+  node:
+    version: '8.2.1'
+dependencies:
+  override:
+    - npm install
+    - npm run build
+test:
+  override:
+    - echo npm test
+general:
+  branches:
+    ignore:
+      - gh-pages
+deployment:
+  all:
+    branch: "/.*/"
+    commands:
+    - npm run release
