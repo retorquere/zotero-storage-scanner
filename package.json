@@ -42,7 +42,7 @@
     "zotero-plugin": "0.0.18"
   },
   "xpi": {
-    "name": "Zotero Storage Scaner",
+    "name": "Zotero Storage Scanner",
     "updateLink": "https://github.com/retorquere/zotero-storage-scanner/releases/download/v{version}/zotero-storage-scanner-{version}.xpi",
     "releaseURL": "https://github.com/retorquere/zotero-storage-scanner/releases/download/release/"
   }

@@ -18,16 +18,15 @@ export = new class StorageScanner {
       }
 
       this.query = `
-        WITH duplicates AS (
+        SELECT item.itemID, attachment.path, COALESCE(duplicates.duplicates, 1) as duplicates
+        FROM items item
+        LEFT JOIN itemAttachments attachment ON attachment.itemID = item.itemID
+        LEFT JOIN (
           SELECT parentItemID, contentType, COUNT(*) as duplicates
           FROM itemAttachments
           WHERE linkMode <> ${Zotero.Attachments.LINK_MODE_LINKED_URL} AND itemID NOT IN (select itemID from deletedItems)
           GROUP BY parentItemID, contentType
-        )
-        SELECT item.itemID, attachment.path, COALESCE(duplicates.duplicates, 1) as duplicates
-        FROM items item
-        LEFT JOIN itemAttachments attachment ON attachment.itemID = item.itemID
-        LEFT JOIN duplicates on attachment.parentItemID = duplicates.parentItemID AND attachment.contentType = duplicates.contentType
+        ) duplicates ON attachment.parentItemID = duplicates.parentItemID AND attachment.contentType = duplicates.contentType
         WHERE
             item.itemTypeID = ${attachmentTypeID}
           AND
@@ -50,9 +49,12 @@ export = new class StorageScanner {
     // Zotero.Attachments.LINK_MODE_IMPORTED_FILE
     // LINK_MODE_LINKED_FILE
 
-    const attachments = await Zotero.DB.queryAsync(this.query)
+    const attachments = (await Zotero.DB.queryAsync(this.query)) || [] // apparently 'no results' gets me 'null', not an empty list. Sure, ok.
+
+    Zotero.debug(`StorageScanner.found: ${attachments.length}`)
 
     for (const attachment of attachments) {
+      Zotero.debug(`StorageScanner.attachment: ${JSON.stringify({itemID: attachment.itemID, path: attachment.path, duplicates: attachment.duplicates})}`)
       const item = await Zotero.Items.getAsync(attachment.itemID)
       /*
         because getAsync isn't "same as get but asynchronously" but "sort
@@ -68,13 +70,15 @@ export = new class StorageScanner {
       let save = false
 
       if (this.updateTag(item, '#broken', !(await item.getFilePathAsync()))) save = true
-      if (this.updateTag(item, '#duplicates', attachments.duplicates > 1)) save = true
+      if (this.updateTag(item, '#duplicates', attachment.duplicates > 1)) save = true
+      Zotero.debug(`StorageScanner.save: ${save}`)
 
       if (save) await item.saveTx()
     }
   }
 
   private updateTag(item, tag, add) {
+    Zotero.debug(`StorageScanner.addTag('${tag}', ${add})`)
     if (add) {
       if (item.hasTag(tag)) return false
       item.addTag(tag)

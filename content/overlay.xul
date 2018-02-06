@@ -5,10 +5,8 @@
 <overlay id="zotero-storage-scanner-overlay"
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <menupopup id="zotero-tb-actions-popup">
-    <!-- Make sure the menu separator for utilities is visible -->
-    <menuseparator id="zotero-tb-actions-plugins-separator" hidden="false"/>
-    <menuitem insertbefore="zotero-tb-actions-separator" label="&zotero-storage-scanner.name;" oncommand="Zotero.StorageScanner.scan()"/>
+  <menupopup id="menu_ToolsPopup">
+    <menuitem label="&zotero-storage-scanner.name;" oncommand="Zotero.StorageScanner.scan()"/>
   </menupopup>
 
   <!-- Include the main extension logic -->
