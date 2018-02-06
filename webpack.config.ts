@@ -10,6 +10,11 @@ import BailPlugin from 'zotero-plugin/plugin/bail'
 import CircularDependencyPlugin = require('circular-dependency-plugin')
 // import AfterBuildPlugin = require('./zotero-webpack/plugin/after-build')
 
+import 'zotero-plugin/make-dirs'
+import 'zotero-plugin/copy-assets'
+import 'zotero-plugin/rdf'
+import 'zotero-plugin/version'
+
 const config = {
   node: { fs: 'empty' },
   resolveLoader: {

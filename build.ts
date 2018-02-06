@@ -1,7 +1,0 @@
-import root from 'zotero-plugin/root'
-process.chdir(root)
-
-import 'zotero-plugin/make-dirs'
-import 'zotero-plugin/copy-assets'
-import 'zotero-plugin/rdf'
-import 'zotero-plugin/version'
