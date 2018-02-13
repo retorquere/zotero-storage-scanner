@@ -1,12 +1,8 @@
-*If you are on `Zotero 5` this plugin has a very high likelyhood of failing* (eg no reports of succes)
-
----
-
 # Zotero Storage Scanner
 
-This plugin scans your storage for missing attachments and possible duplicates
+No compatible with Zotero 5. This plugin scans your storage for missing attachments and possible duplicates
 
-Install by downloading the [latest version](https://raw.github.com/retorquere/zotero-storage-scanner/master/zotero-storage-scanner-0.0.16.xpi).
+Install by downloading the [latest version](https://github.com/retorquere/zotero-storage-scanner/releases/latest).
 
 ---
 
@@ -22,6 +18,6 @@ are the breaks.
 
 ## A little background on what this does
 
-There is no UI, this plugin scans your library after being launched from `preferences->storage scanner` in the background but does a far better job than the built in scanner. For example the built in Zotero duplicate scanner marks things like supplementary material PDFs (which are becoming more and more common as we move towrawrd reproducable reseach) as duplicates, even if the filenames, tags, and sizes are very different. But `zotero-storage-scanner` does not tag theses as in the `#duplicates` folder, instead it finds "true" duplicates; basically de-duping your PDFs and library database. `#broken` covers a lot more ground including but not limited to things like broken links to files, missing PDFs, or issues created by your filesystem etc.
+There is no UI, this plugin scans your library after being launched from `tools->storage scanner` in the background.
 
 If you run `zotero-storage-scanner` you will see a zotero process (name dependand on OS) kick off in your proccess manager (top, activity monitor, Task Manager), however as it works through your library it live updates two smart-folders `#duplicates` and `#broken` as it goes. If those two folders are empty after some time (variable depending on size of library) then you are golden, if there are entries tagged in either then your likely have duplicate articles or a file/DB has issues been identified with the most likely cause being a "missing" `PDF` sometimes caused by incomplete syncing.
