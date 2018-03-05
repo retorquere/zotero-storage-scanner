@@ -69,8 +69,8 @@ export = new class StorageScanner {
 
       let save = false
 
-      if (this.updateTag(item, '#broken', !(await item.getFilePathAsync()))) save = true
-      if (this.updateTag(item, '#duplicates', attachment.duplicates > 1)) save = true
+      if (this.updateTag(item, '#broken_attachments ', !(await item.getFilePathAsync()))) save = true
+      if (this.updateTag(item, '#duplicate_attachments', attachment.duplicates > 1)) save = true
       Zotero.debug(`StorageScanner.save: ${save}`)
 
       if (save) await item.saveTx()
