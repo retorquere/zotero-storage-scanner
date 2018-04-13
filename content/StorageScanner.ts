@@ -1,14 +1,15 @@
 declare const Zotero: any
 
 export = new class StorageScanner {
-  private query: string
+  private duplicates: string
+  private noattachments: string
 
   constructor() {
     window.addEventListener('load', e => { this.load() }, false)
   }
 
   public async load() {
-    if (!this.query) {
+    if (!this.duplicates) {
       // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
       await Zotero.Schema.schemaUpdatePromise
 
@@ -17,7 +18,7 @@ export = new class StorageScanner {
         attachmentTypeID = type.itemTypeID
       }
 
-      this.query = `
+      this.duplicates = `
         SELECT item.itemID, attachment.path, COALESCE(duplicates.duplicates, 1) as duplicates
         FROM items item
         LEFT JOIN itemAttachments attachment ON attachment.itemID = item.itemID
@@ -38,6 +39,15 @@ export = new class StorageScanner {
                 (attachment.linkMode IS NOT NULL AND attachment.linkMode <> ${Zotero.Attachments.LINK_MODE_LINKED_URL})
             )
       `.replace(/\n/g, ' ').trim()
+
+      this.noattachments = `
+				SELECT item.itemID, COUNT(attachment.itemID) AS attachments
+        FROM items item
+        JOIN itemTypes ON item.itemTypeID = itemTypes.itemTypeID AND itemTypes.typeName NOT IN ('note', 'attachment')
+        LEFT JOIN itemAttachments attachment ON attachment.parentItemID = item.itemID AND attachment.itemID NOT IN (select itemID from deletedItems)
+        WHERE item.itemID NOT IN (select itemID from deletedItems)
+        GROUP BY item.itemID
+      `.replace(/\n/g, ' ').trim()
     }
   }
 
@@ -49,9 +59,9 @@ export = new class StorageScanner {
     // Zotero.Attachments.LINK_MODE_IMPORTED_FILE
     // LINK_MODE_LINKED_FILE
 
-    const attachments = (await Zotero.DB.queryAsync(this.query)) || [] // apparently 'no results' gets me 'null', not an empty list. Sure, ok.
+    const attachments = (await Zotero.DB.queryAsync(this.duplicates)) || [] // apparently 'no results' gets me 'null', not an empty list. Sure, ok.
 
-    Zotero.debug(`StorageScanner.found: ${attachments.length}`)
+    Zotero.debug(`StorageScanner.attachments: ${attachments.length}`)
 
     for (const attachment of attachments) {
       Zotero.debug(`StorageScanner.attachment: ${JSON.stringify({itemID: attachment.itemID, path: attachment.path, duplicates: attachment.duplicates})}`)
@@ -73,6 +83,17 @@ export = new class StorageScanner {
       if (this.updateTag(item, '#duplicate_attachments', attachment.duplicates > 1)) save = true
       Zotero.debug(`StorageScanner.save: ${save}`)
 
+      if (save) await item.saveTx()
+    }
+
+    const items = (await Zotero.DB.queryAsync(this.noattachments)) || []
+    Zotero.debug(`StorageScanner.items: ${items.length}`)
+    for (const status of items) {
+      const item = await Zotero.Items.getAsync(status.itemID)
+      await item.loadAllData()
+
+      let save = false
+      if (this.updateTag(item, '#nosource ', !status.attachments)) save = true
       if (save) await item.saveTx()
     }
   }

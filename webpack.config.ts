@@ -5,8 +5,6 @@
 import * as webpack from 'webpack'
 import * as path from 'path'
 
-import BailPlugin from 'zotero-plugin/plugin/bail'
-
 import CircularDependencyPlugin = require('circular-dependency-plugin')
 // import AfterBuildPlugin = require('./zotero-webpack/plugin/after-build')
 
@@ -47,7 +45,6 @@ const config = {
       })
     }),
     */
-    BailPlugin,
   ],
 
   context: path.resolve(__dirname, './content'),
