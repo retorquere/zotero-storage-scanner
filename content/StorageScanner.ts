@@ -50,9 +50,9 @@ export = new class StorageScanner {
 
         UNION
 
-        SELECT attachment.itemID, 0 as attachments
+        SELECT itemID, CASE WHEN parentID IS NULL THEN 0 ELSE 1 END as attachments
         FROM itemAttachments attachment
-        WHERE attachment.itemID NOT IN (select itemID from deletedItems) AND attachment.parentItemID IS NULL
+        WHERE attachment.itemID NOT IN (select itemID from deletedItems)
       `.replace(/\n/g, ' ').trim()
     }
   }
