@@ -1,6 +1,6 @@
 {
   "name": "zotero-storage-scanner",
-  "version": "5.0.4",
+  "version": "5.0.5",
   "description": "Zotero Storage Scanner",
   "main": "index.js",
   "scripts": {
