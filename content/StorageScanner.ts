@@ -47,6 +47,12 @@ export = new class StorageScanner {
         LEFT JOIN itemAttachments attachment ON attachment.parentItemID = item.itemID AND attachment.itemID NOT IN (select itemID from deletedItems)
         WHERE item.itemID NOT IN (select itemID from deletedItems)
         GROUP BY item.itemID
+
+        UNION
+
+        SELECT attachment.itemID, 0 as attachments
+        FROM itemAttachments attachment
+        WHERE attachment.itemID NOT IN (select itemID from deletedItems) AND attachment.parentItemID IS NULL
       `.replace(/\n/g, ' ').trim()
     }
   }
