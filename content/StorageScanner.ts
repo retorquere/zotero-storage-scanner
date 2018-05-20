@@ -105,12 +105,13 @@ export = new class StorageScanner {
   }
 
   private updateTag(item, tag, add) {
-    Zotero.debug(`StorageScanner.addTag('${tag}', ${add})`)
+    const hasTag = item.hasTag(tag)
+    Zotero.debug(`StorageScanner.addTag('${tag}', ${add}); hasTag: ${hasTag}`)
     if (add) {
-      if (item.hasTag(tag)) return false
+      if (hasTag) return false
       item.addTag(tag)
     } else {
-      if (!item.hasTag(tag)) return false
+      if (!hasTag) return false
       item.removeTag(tag)
     }
 
