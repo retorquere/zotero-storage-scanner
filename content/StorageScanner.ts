@@ -10,7 +10,7 @@ export = new class StorageScanner {
 
   public async load() {
     if (!this.duplicates) {
-      // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
+      // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
       await Zotero.Schema.schemaUpdatePromise
 
       let attachmentTypeID
