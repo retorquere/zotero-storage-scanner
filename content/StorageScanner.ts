@@ -10,7 +10,7 @@ export = new class StorageScanner {
 
   public async load() {
     if (!this.duplicates) {
-      // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
+      // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
       await Zotero.Schema.schemaUpdatePromise
 
       let attachmentTypeID
@@ -41,7 +41,7 @@ export = new class StorageScanner {
       `.replace(/\n/g, ' ').trim()
 
       this.noattachments = `
-				SELECT item.itemID, COUNT(attachment.itemID) AS attachments
+	SELECT item.itemID, COUNT(attachment.itemID) AS attachments
         FROM items item
         JOIN itemTypes ON item.itemTypeID = itemTypes.itemTypeID AND itemTypes.typeName NOT IN ('note', 'attachment')
         LEFT JOIN itemAttachments attachment ON attachment.parentItemID = item.itemID AND attachment.itemID NOT IN (select itemID from deletedItems)
