@@ -19,7 +19,11 @@ export = new class StorageScanner {
       }
 
       this.duplicates = `
-        SELECT item.itemID, attachment.path, COALESCE(duplicates.duplicates, 1) as duplicates
+        SELECT
+          item.itemID,
+          attachment.path,
+          CASE attachment.linkMode WHEN ${Zotero.Attachments.LINK_MODE_LINKED_URL} THEN 1 ELSE 0 END AS isLinkedURL,
+          COALESCE(duplicates.duplicates, 1) as duplicates
         FROM items item
         LEFT JOIN itemAttachments attachment ON attachment.itemID = item.itemID
         LEFT JOIN (
@@ -39,9 +43,10 @@ export = new class StorageScanner {
                 (attachment.linkMode IS NOT NULL AND attachment.linkMode <> ${Zotero.Attachments.LINK_MODE_LINKED_URL})
             )
       `.replace(/\n/g, ' ').trim()
+      Zotero.debug(`StorageScanner: duplicates = ${this.duplicates}`)
 
       this.noattachments = `
-	SELECT item.itemID, COUNT(attachment.itemID) AS attachments
+	      SELECT item.itemID, COUNT(attachment.itemID) AS attachments
         FROM items item
         JOIN itemTypes ON item.itemTypeID = itemTypes.itemTypeID AND itemTypes.typeName NOT IN ('note', 'attachment')
         LEFT JOIN itemAttachments attachment ON attachment.parentItemID = item.itemID AND attachment.itemID NOT IN (select itemID from deletedItems)
@@ -85,7 +90,7 @@ export = new class StorageScanner {
 
       let save = false
 
-      if (this.updateTag(item, '#broken_attachments ', !(await item.getFilePathAsync()))) save = true
+      if (this.updateTag(item, '#broken_attachments', !attachment.isLinkedURL && !(await item.getFilePathAsync()))) save = true
       if (this.updateTag(item, '#duplicate_attachments', attachment.duplicates > 1)) save = true
       Zotero.debug(`StorageScanner.save: ${save}`)
 
@@ -105,7 +110,7 @@ export = new class StorageScanner {
   }
 
   private updateTag(item, tag, add) {
-    Zotero.debug(`StorageScanner.addTag('${tag}', ${add})`)
+    Zotero.debug(`StorageScanner.updateTag('${item.id}.${tag}', ist: ${item.hasTag(tag)}, soll: ${add})`)
     if (add) {
       if (item.hasTag(tag)) return false
       item.addTag(tag)
