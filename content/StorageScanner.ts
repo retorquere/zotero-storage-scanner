@@ -71,7 +71,7 @@ export = new class StorageScanner {
 
     for (const attachment of attachments) {
       Zotero.debug(`StorageScanner.attachment: ${JSON.stringify({itemID: attachment.itemID, path: attachment.path, duplicates: attachment.duplicates})}`)
-      const item = await Zotero.Items.getAsync(attachment.itemID)
+      let item = await Zotero.Items.getAsync(attachment.itemID)
       /*
         because getAsync isn't "same as get but asynchronously" but "sort
         of same as get but asynchronously, however if the object was not
@@ -90,6 +90,10 @@ export = new class StorageScanner {
       Zotero.debug(`StorageScanner.save: ${save}`)
 
       if (save) await item.saveTx()
+
+      item = await Zotero.Items.getAsync(attachment.itemID)
+      await item.loadAllData()
+      Zotero.debug(`StorageScanner.save: ${attachment.itemID}: save = ${save}, #broken_attachments: ${item.hasTag('#broken_attachments')}, #duplicate_attachments: ${item.hasTag('#duplicate_attachments')}`)
     }
 
     const items = (await Zotero.DB.queryAsync(this.noattachments)) || []
