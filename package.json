@@ -27,20 +27,20 @@
   "dependencies": {
     "circular-dependency-plugin": "^5.0.2",
     "find-up": "^3.0.0",
-    "fs-extra": "^6.0.1",
+    "fs-extra": "^7.0.1",
     "properties-reader": "0.0.16",
     "pug": "^2.0.3",
     "replace": "^1.0.0",
-    "request": "^2.87.0",
+    "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "rimraf": "^2.6.2",
-    "ts-loader": "^4.4.2",
-    "ts-node": "^7.0.0",
-    "tslint": "^5.10.0",
-    "typescript": "^2.9.2",
+    "ts-loader": "^5.3.0",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6",
     "uri-templates": "^0.2.0",
-    "webpack": "^4.14.0",
-    "zotero-plugin": "0.0.37"
+    "webpack": "^4.26.0",
+    "zotero-plugin": "0.0.60"
   },
   "xpi": {
     "name": "Zotero Storage Scanner",
@@ -48,6 +48,6 @@
     "releaseURL": "https://github.com/retorquere/zotero-storage-scanner/releases/download/release/"
   },
   "devDependencies": {
-    "webpack-cli": "^3.0.8"
+    "webpack-cli": "^3.1.2"
   }
 }

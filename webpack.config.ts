@@ -14,6 +14,24 @@ import 'zotero-plugin/rdf'
 import 'zotero-plugin/version'
 
 const config = {
+  mode: 'development',
+  devtool: false,
+  optimization: {
+    flagIncludedChunks: true,
+    occurrenceOrder: false,
+    usedExports: true,
+    minimize: false,
+    concatenateModules: false,
+    noEmitOnErrors: true,
+    namedModules: true,
+    namedChunks: true,
+    // runtimeChunk: false,
+  },
+
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
+
   node: { fs: 'empty' },
   resolveLoader: {
     alias: {
