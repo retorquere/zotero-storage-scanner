@@ -9,7 +9,9 @@
     "build": "webpack",
     "postbuild": "zotero-plugin-zipup build zotero-storage-scanner",
     "release": "zotero-plugin-release",
-    "postversion": "git push --follow-tags"
+    "postversion": "git push --follow-tags",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -40,7 +42,8 @@
     "typescript": "^3.1.6",
     "uri-templates": "^0.2.0",
     "webpack": "^4.26.0",
-    "zotero-plugin": "0.0.60"
+    "zotero-plugin": "0.0.60",
+    "snyk": "^1.316.1"
   },
   "xpi": {
     "name": "Zotero Storage Scanner",
@@ -49,5 +52,6 @@
   },
   "devDependencies": {
     "webpack-cli": "^3.1.2"
-  }
+  },
+  "snyk": true
 }
