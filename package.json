@@ -40,7 +40,7 @@
     "typescript": "^3.1.6",
     "uri-templates": "^0.2.0",
     "webpack": "^4.26.0",
-    "zotero-plugin": "0.0.60"
+    "zotero-plugin": "0.0.96"
   },
   "xpi": {
     "name": "Zotero Storage Scanner",
