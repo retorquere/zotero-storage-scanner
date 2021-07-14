@@ -1,14 +1,23 @@
 declare const Zotero: any
+// declare const Components: any
 
-export = new class StorageScanner {
+const monkey_patch_marker = 'StorageScannerMonkeyPatched'
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function patch(object, method, patcher) {
+  if (object[method][monkey_patch_marker]) return
+  object[method] = patcher(object[method])
+  object[method][monkey_patch_marker] = true
+}
+
+class StorageScanner {
   private duplicates: string
   private noattachments: string
+  private globals: Record<string, any>
 
-  constructor() {
-    window.addEventListener('load', e => { this.load() }, false)
-  }
-
-  public async load() {
+  // eslint-disable-next-line @typescript-eslint/require-await
+  public async load(globals: Record<string, any>) {
+    this.globals = globals
     if (!this.duplicates) {
       // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
       await Zotero.Schema.schemaUpdatePromise
@@ -63,7 +72,7 @@ export = new class StorageScanner {
   }
 
   public async scan() {
-    await this.load()
+    if (!this.duplicates) return
 
     // Zotero.Attachments.LINK_MODE_LINKED_URL // ignore this
     // Zotero.Attachments.LINK_MODE_IMPORTED_URL // snapshot
@@ -114,7 +123,8 @@ export = new class StorageScanner {
     if (add) {
       if (item.hasTag(tag)) return false
       item.addTag(tag)
-    } else {
+    }
+    else {
       if (!item.hasTag(tag)) return false
       item.removeTag(tag)
     }
@@ -122,3 +132,5 @@ export = new class StorageScanner {
     return true
   }
 }
+
+Zotero.StorageScanner = new StorageScanner

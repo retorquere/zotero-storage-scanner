@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://zotero-storage-scanner/skin/overlay.css" type="text/css"?>
+<!DOCTYPE window SYSTEM "chrome://zotero-storage-scanner/locale/zotero-storage-scanner.dtd">
+
+<overlay id="zotero-storage-scanner-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script>
+    var globals = Function('return this')();
+    var zotero_storage_scanner_zoteropane = null;
+  </script>
+  <stringbundleset>
+    <stringbundle id="zotero-storage-scanner-strings" src="chrome://zotero-storage-scanner/locale/zotero-storage-scanner.properties"/>
+  </stringbundleset>
+
+  <menupopup id="menu_ToolsPopup">
+    <menuitem label="&zotero-storage-scanner.name;" oncommand="Zotero.StorageScanner.scan()"/>
+  </menupopup>
+	
+	<!-- Include the main extension logic -->
+  <script src="chrome://zotero/content/include.js"/>
+  <script src="chrome://zotero-storage-scanner/content/zotero-storage-scanner.js"/>
+  <script>
+    window.addEventListener('load', async function() {
+      try {
+        Zotero.debug('zotero-storage-scanner startup')
+        await Zotero.StorageScanner.load(globals)
+        Zotero.debug('zotero-storage-scanner started')
+      } catch (err) {
+        Zotero.debug(`zotero-storage-scanner ZoteroPane overlay error: ${err.message}\n${err.stack ||''}`)
+      }
+    })
+  </script>
+</overlay>

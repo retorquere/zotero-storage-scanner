@@ -2,4 +2,4 @@ content	zotero-storage-scanner				content/
 locale	zotero-storage-scanner	en-US		locale/en-US/
 skin	zotero-storage-scanner	default		skin/
 
-overlay	chrome://zotero/content/zoteroPane.xul	chrome://zotero-storage-scanner/content/overlay.xul
+overlay	chrome://zotero/content/zoteroPane.xul	chrome://zotero-storage-scanner/content/zotero-storage-scanner.xul

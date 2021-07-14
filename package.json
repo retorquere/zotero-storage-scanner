@@ -1,53 +1,45 @@
 {
   "name": "zotero-storage-scanner",
   "version": "5.0.8",
-  "description": "Zotero Storage Scanner",
-  "main": "index.js",
+  "description": "Scan attachments for duplicates",
   "scripts": {
-    "lint": "tslint -t stylish --project .",
+    "lint": "eslint . --ext .ts --cache --cache-location .eslintcache/",
     "prebuild": "npm run lint",
-    "build": "webpack",
+    "build": "tsc --noEmit && node esbuild.js",
     "postbuild": "zotero-plugin-zipup build zotero-storage-scanner",
     "release": "zotero-plugin-release",
     "postversion": "git push --follow-tags"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/retorquere/zotero-storage-scanner.git"
+    "url": "https://github.com/retorquere/zotero-storage-scanner.git"
   },
   "author": {
     "name": "Emiliano Heyns",
-    "email": "Emiliano.Heyns@iris-advies.com"
+    "email": "emiliano.heyns@iris-advies.com"
   },
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/retorquere/zotero-storage-scanner/issues"
   },
-  "homepage": "https://github.com/retorquere/zotero-storage-scanner#readme",
+  "homepage": "https://github.com/retorquere/zotero-storage-scanner",
   "dependencies": {
-    "circular-dependency-plugin": "^5.0.2",
-    "find-up": "^3.0.0",
-    "fs-extra": "^7.0.1",
-    "properties-reader": "0.0.16",
-    "pug": "^2.0.3",
-    "replace": "^1.0.0",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.2",
-    "rimraf": "^2.6.2",
-    "ts-loader": "^5.3.0",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
-    "typescript": "^3.1.6",
-    "uri-templates": "^0.2.0",
-    "webpack": "^4.26.0",
-    "zotero-plugin": "0.0.60"
+    "@types/mocha": "^8.2.3",
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
+    "@typescript-eslint/parser": "^4.28.3",
+    "esbuild": "^0.12.15",
+    "eslint": "^7.30.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsdoc": "^35.4.3",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "mkdirp": "^1.0.4",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5",
+    "zotero-plugin": "^1.0.55"
   },
   "xpi": {
-    "name": "Zotero Storage Scanner",
+    "name": "Storage Scanner for Zotero",
     "updateLink": "https://github.com/retorquere/zotero-storage-scanner/releases/download/v{version}/zotero-storage-scanner-{version}.xpi",
     "releaseURL": "https://github.com/retorquere/zotero-storage-scanner/releases/download/release/"
-  },
-  "devDependencies": {
-    "webpack-cli": "^3.1.2"
   }
 }

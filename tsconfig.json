@@ -5,6 +5,7 @@
     "disableSizeLimit": true,
     "module": "commonjs",
     "noImplicitAny": false,
+    "esModuleInterop": true,
     "removeComments": false,
     "preserveConstEnums": false,
     "sourceMap": false,
@@ -12,20 +13,12 @@
     "lib": [ "es2017", "dom" ],
     "typeRoots": [
       "./typings",
-      "./gen/typings",
       "./node_modules/@types"
     ]
   },
   "include": [
-    "bin",
-    "loader",
-    "plugin",
-    "script",
-    "webpack",
     "content/**/*",
     "resource/**/*",
-    "zotero-webpack/**/*",
-    "setup/**/*",
     "*.ts"
   ],
   "exclude": [
