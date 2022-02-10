@@ -16,7 +16,6 @@
   </menupopup>
 	
 	<!-- Include the main extension logic -->
-  <script src="chrome://zotero/content/include.js"/>
   <script src="chrome://zotero-storage-scanner/content/zotero-storage-scanner.js"/>
   <script>
     window.addEventListener('load', async function() {
