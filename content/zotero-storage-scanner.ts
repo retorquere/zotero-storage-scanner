@@ -100,7 +100,7 @@ class StorageScanner {
       let save = false
 
       if (this.updateTag(item, '#broken_attachments', !attachment.isLinkedURL && !(await item.getFilePathAsync()))) save = true
-      if (this.updateTag(item, '#duplicate_attachments', attachment.duplicates > 1)) save = true
+      if (this.updateTag(item, '#multiple_attachments_of_same_type', attachment.duplicates > 1)) save = true
       Zotero.debug(`StorageScanner.save: ${save}`)
 
       if (save) await item.saveTx()
