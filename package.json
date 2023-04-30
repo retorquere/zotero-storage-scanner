@@ -24,7 +24,7 @@
   "homepage": "https://github.com/retorquere/zotero-storage-scanner",
   "dependencies": {
     "@types/mocha": "^9.1.1",
-    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
     "@typescript-eslint/parser": "^5.25.0",
     "esbuild": "^0.14.39",
     "eslint": "^8.16.0",
