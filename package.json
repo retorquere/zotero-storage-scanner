@@ -27,7 +27,7 @@
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
     "esbuild": "^0.14.39",
-    "eslint": "^8.16.0",
+    "eslint": "^8.39.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsdoc": "^39.3.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
