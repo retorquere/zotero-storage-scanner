@@ -1,4 +1,8 @@
-# Zotero Storage Scanner
+# This plugin has been superceeded by Zotero Attachment Scanner
+
+which can be found at https://github.com/SciImage/zotero-attachment-scanner
+
+## Zotero Storage Scanner
 
 A Zotero plugin to remove the broken & duplicate attachment link of the bibliography
 
@@ -7,10 +11,6 @@ Install by downloading the [latest version](https://github.com/retorquere/zotero
 This plugin scans your attachments of storage to remove the missing & duplicate attachment link. The combination of the duplicated bibliography in Zotero could create a lot of duplicate attachments. Also when you use a plugin/ third-party software to directly remove the PDF of the bibliography, the attachment link becomes broken in Zotero. This plugin is designed to solve the problem.
 
 Install by downloading the latest version and installing it from the Zotero add-ons screen.
-
-## Support -- read carefully
-
-Please remain on the latest version of the add-on. My time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I cannot accept bug reports or support requests on anything but the latest version, currently at 5.0.3. If you submit an issue report, please include the version that you are on. By the time I get to your issue, the latest version might have bumped up already, and you will have to upgrade (you might have auto-upgraded already however) and re-verify that your issue still exists. Apologies for the inconvenience, but such are the breaks.
 
 ## A little background on how the plugin works
 
